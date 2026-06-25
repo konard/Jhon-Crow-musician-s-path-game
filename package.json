@@ -1,0 +1,10 @@
+{
+  "name": "musician-s-path-game",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A static MVP for a gamified musician release checklist.",
+  "scripts": {
+    "test": "node tests/progress.test.js"
+  },
+  "devDependencies": {}
+}
