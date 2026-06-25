@@ -8,10 +8,11 @@ vm.runInContext(fs.readFileSync("data.js", "utf8"), context);
 context.ACTIONS = context.module.exports.ACTIONS;
 context.BASELINE_YEARS = context.module.exports.BASELINE_YEARS;
 context.OPTIMIZED_YEARS = context.module.exports.OPTIMIZED_YEARS;
+context.GROWTH_MODEL = context.module.exports.GROWTH_MODEL;
 context.module.exports = {};
 vm.runInContext(fs.readFileSync("app.js", "utf8"), context);
 
-const { calculateProgress, loadState, saveState, STORAGE_KEY } = context.module.exports;
+const { calculateProgress, calculateGrowthCurve, loadState, saveState, STORAGE_KEY } = context.module.exports;
 const actions = context.ACTIONS;
 
 const empty = calculateProgress(actions, []);
@@ -25,6 +26,18 @@ assert.equal(full.points, full.totalPoints);
 assert.equal(full.acceleration, 2);
 assert.equal(full.yearsMin, 3.5);
 assert.equal(full.yearsMax, 4.5);
+
+const standardCurve = calculateGrowthCurve(context.GROWTH_MODEL, 0);
+assert.equal(standardCurve.length, context.GROWTH_MODEL.months + 1);
+assert.equal(standardCurve[0].standard, context.GROWTH_MODEL.startListeners);
+assert.equal(standardCurve[0].optimized, context.GROWTH_MODEL.startListeners);
+assert.equal(standardCurve.at(-1).optimized, standardCurve.at(-1).standard);
+
+const recommendationCurve = calculateGrowthCurve(context.GROWTH_MODEL, 1);
+const jumpMonth = context.GROWTH_MODEL.recommendationJumpMonth;
+assert.equal(recommendationCurve[jumpMonth - 1].optimized > standardCurve[jumpMonth - 1].optimized, true);
+assert.equal(recommendationCurve[jumpMonth].optimized > recommendationCurve[jumpMonth].standard, true);
+assert.equal(recommendationCurve.at(-1).optimized > recommendationCurve.at(-1).standard, true);
 
 const storage = new Map();
 const fakeStorage = {

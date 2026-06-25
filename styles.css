@@ -142,6 +142,124 @@ main {
   gap: 28px;
 }
 
+.growth-section {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.section-heading {
+  max-width: 920px;
+}
+
+.section-heading h2 {
+  margin-bottom: 8px;
+  color: #263236;
+  font-size: 1.2rem;
+}
+
+.section-heading p {
+  margin-bottom: 0;
+  color: #425054;
+  line-height: 1.55;
+}
+
+.growth-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(220px, 0.7fr);
+  gap: 14px;
+  align-items: stretch;
+  border: 1px solid #d6ddd8;
+  border-radius: 8px;
+  padding: 16px;
+  background: #ffffff;
+}
+
+#growthChart {
+  min-width: 0;
+}
+
+.growth-chart {
+  display: block;
+  width: 100%;
+  min-height: 240px;
+}
+
+.growth-chart text {
+  fill: #5c686b;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.grid line {
+  stroke: #dfe5df;
+  stroke-width: 1;
+}
+
+.axis {
+  stroke: #9fafab;
+  stroke-width: 1.5;
+}
+
+.jump-line {
+  stroke: #d4a72c;
+  stroke-dasharray: 6 6;
+  stroke-width: 2;
+}
+
+.standard-line,
+.optimized-line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 4;
+}
+
+.standard-line {
+  stroke: #78888b;
+}
+
+.optimized-line {
+  stroke: #2b737e;
+}
+
+.standard-dot {
+  fill: #78888b;
+}
+
+.optimized-dot {
+  fill: #2b737e;
+}
+
+.growth-stats {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.growth-stats div {
+  display: grid;
+  gap: 4px;
+  align-content: center;
+  min-height: 76px;
+  border-radius: 8px;
+  padding: 12px;
+  background: #eef3f0;
+}
+
+.growth-stats dt {
+  color: #5c686b;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.growth-stats dd {
+  margin: 0;
+  color: #1d2528;
+  font-size: clamp(1.25rem, 2.6vw, 1.8rem);
+  font-weight: 900;
+}
+
 .phase h2,
 .sources h2 {
   margin-bottom: 12px;
@@ -230,6 +348,10 @@ main {
 
   .dashboard {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .growth-panel {
+    grid-template-columns: 1fr;
   }
 
   .score {
