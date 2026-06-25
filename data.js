@@ -18,6 +18,7 @@ const ACTIONS = [
     upliftMin: 10,
     upliftMax: 20,
     horizon: "Ongoing",
+    recurrenceDays: 90,
     description: "Use a narrow subgenre, 2-3 moods, and instrumental metadata so recommendation systems classify the release cleanly.",
     source: "Issue estimate."
   },
@@ -51,6 +52,7 @@ const ACTIONS = [
     upliftMin: 2,
     upliftMax: 10,
     horizon: "Ongoing",
+    recurrenceDays: 30,
     description: "Add short looping visual assets to improve save, share, and profile engagement signals.",
     source: "Issue estimate; Spotify reports high-quality Canvas can lift streams, saves, profile visits, and shares."
   },
@@ -84,6 +86,7 @@ const ACTIONS = [
     upliftMin: 0,
     upliftMax: 0,
     horizon: "Long tail",
+    recurrenceDays: 7,
     description: "Post track fragments with links to reach listeners outside Spotify and recycle release assets.",
     source: "Issue estimate."
   },
@@ -95,6 +98,7 @@ const ACTIONS = [
     upliftMin: 40,
     upliftMax: 60,
     horizon: "After 2-3 cycles",
+    recurrenceDays: 28,
     description: "Maintain a repeatable schedule instead of weekly drops or long gaps.",
     source: "Issue estimate."
   },
@@ -150,6 +154,7 @@ const ACTIONS = [
     upliftMin: 5,
     upliftMax: 15,
     horizon: "Ongoing",
+    recurrenceDays: 7,
     description: "Upload releases, join 2-3 genre groups, post weekly, and listen to related artists.",
     source: "Issue estimate."
   },

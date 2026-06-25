@@ -11,7 +11,7 @@ context.OPTIMIZED_YEARS = context.module.exports.OPTIMIZED_YEARS;
 context.module.exports = {};
 vm.runInContext(fs.readFileSync("app.js", "utf8"), context);
 
-const { calculateProgress, loadState, saveState, STORAGE_KEY } = context.module.exports;
+const { applyLoopResets, calculateProgress, calculateRetainedPoints, loadState, saveState, STORAGE_KEY } = context.module.exports;
 const actions = context.ACTIONS;
 
 const empty = calculateProgress(actions, []);
@@ -32,11 +32,38 @@ const fakeStorage = {
   setItem: (key, value) => storage.set(key, value)
 };
 
-saveState({ completed: ["canvas"], goalRub: 25000 }, fakeStorage);
+saveState({ completed: ["canvas"], goalRub: 25000, resetLoops: false, loopCompletions: {}, retainedLoopPoints: {} }, fakeStorage);
 assert.equal(storage.has(STORAGE_KEY), true);
-assert.deepEqual(JSON.parse(JSON.stringify(loadState(fakeStorage))), { completed: ["canvas"], goalRub: 25000 });
+assert.deepEqual(JSON.parse(JSON.stringify(loadState(fakeStorage))), {
+  completed: ["canvas"],
+  goalRub: 25000,
+  resetLoops: false,
+  loopCompletions: {},
+  retainedLoopPoints: {}
+});
 
 storage.set(STORAGE_KEY, "{broken");
-assert.deepEqual(JSON.parse(JSON.stringify(loadState(fakeStorage))), { completed: [], goalRub: 20000 });
+assert.deepEqual(JSON.parse(JSON.stringify(loadState(fakeStorage))), {
+  completed: [],
+  goalRub: 20000,
+  resetLoops: true,
+  loopCompletions: {},
+  retainedLoopPoints: {}
+});
+
+const loopState = {
+  completed: ["canvas"],
+  goalRub: 20000,
+  resetLoops: true,
+  loopCompletions: { canvas: "2026-01-01T00:00:00.000Z" },
+  retainedLoopPoints: {}
+};
+const reset = applyLoopResets(actions, loopState, new Date("2026-02-01T00:00:00.000Z"));
+assert.deepEqual(JSON.parse(JSON.stringify(reset.completed)), []);
+assert.equal(reset.retainedLoopPoints.canvas, 6);
+assert.equal(calculateRetainedPoints(actions, reset), 6);
+
+const disabled = applyLoopResets(actions, { ...loopState, resetLoops: false }, new Date("2026-02-01T00:00:00.000Z"));
+assert.deepEqual(JSON.parse(JSON.stringify(disabled.completed)), ["canvas"]);
 
 console.log("progress.test.js passed");
