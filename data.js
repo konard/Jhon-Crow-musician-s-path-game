@@ -184,7 +184,15 @@ const ACTIONS = [
 
 const BASELINE_YEARS = { min: 5, max: 7 };
 const OPTIMIZED_YEARS = { min: 3.5, max: 4.5 };
+const GROWTH_MODEL = {
+  months: 36,
+  startListeners: 120,
+  baseMonthlyRate: 0.08,
+  optimizedMonthlyRate: 0.115,
+  recommendationJumpMonth: 14,
+  recommendationJumpMultiplier: 1.85
+};
 
 if (typeof module !== "undefined") {
-  module.exports = { ACTIONS, BASELINE_YEARS, OPTIMIZED_YEARS };
+  module.exports = { ACTIONS, BASELINE_YEARS, OPTIMIZED_YEARS, GROWTH_MODEL };
 }
